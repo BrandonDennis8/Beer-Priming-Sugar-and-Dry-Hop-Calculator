@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dry Hop Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Priming sugar -->
+    <div class="container">
+        <h2 class="mt-5 text-center">Priming sugar calculator</h2>
+        <h3 class="mt-5 text-center">Enter amount of beer in fermenter</h3> <br>        
+
+        
+        <div class="row form-group justify-content-center">
+            <div class="col-md-3">
+                <input type="number" id="inputForPrimingSugar" class="form-control"
+                    placeholder="Enter amount in gallons">
+            </div>
+            <div class="col-md-3">
+                <button onclick="CalculatePrimingSugar()" class="btn btn-info w-100">Sugar</button>
+            </div>
+        </div>
+
+        <!-- Result -->
+        <p id="primingSugar" class="mt-3 text-center"></p>
+        <p id="primingAgave" class="mt-3 text-center"></p>
+    </div>
+
+    <!-- Dry Hop -->
+    <br>
+    <div class="container">
+        <h2 class="mt-5 text-center">Dry-hop calculator</h2>
+        <h3 class="mt-5 text-center">Enter amount of beer in fermenter</h3> <br>        
+
+        <div class="row form-group justify-content-center">
+            <div class="col-md-3">
+                <input type="number" id="inputForDryHops" class="form-control"
+                    placeholder="Enter amount in gallons">
+            </div>
+            <div class="col-md-3">
+                <button onclick="CalculateDryHops()" class="btn btn-success w-100">Hops</button>
+            </div>
+        </div>
+
+        <!-- Result -->
+        <p id="Grams" class="mt-3 text-center"></p>
+        <p id="Ounces" class="mt-3 text-center"></p>
+    </div>
+
+    <!-- JavaScript code here -->
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+    <script>
+        function CalculatePrimingSugar() {
+            var toGrams = 28;
+            var batchSize = document.getElementById('inputForPrimingSugar').value;
+            var toAgave = 1.40056;
+
+            // calculate priming sugar
+            var totalSugar = Math.round(batchSize * toGrams * 10) / 10;
+            var totalAgave = Math.round(batchSize * toGrams * toAgave * 10) / 10;
+
+            document.getElementById('primingSugar').innerText = 'Priming Sugar: ' + totalSugar + "g";
+            document.getElementById('primingAgave').innerText = 'Agave: ' + totalAgave + "g";
+        }
+
+        function CalculateDryHops() {
+            min = 0.15;
+            max = 0.50;
+            toGrams = 28.3495;
+            liters = 3.78541;
+
+            var batchSize = document.getElementById('inputForDryHops').value;
+
+            // grams
+            var minG = Math.round(batchSize * min * toGrams * 10) / 10;
+            var maxG = Math.round(batchSize * max * toGrams * 10) / 10;
+
+            // oz
+            var minOz = Math.round(batchSize * min * 100) / 100;
+            var maxOz = Math.round(batchSize * max * 100) / 100;
+
+            document.getElementById('Grams').innerText = 'Grams: ' + minG + "g - " + maxG +"g";
+            document.getElementById('Ounces').innerText = 'Ounces: ' + minOz + "oz - " + maxOz +"oz";
+        }
+    </script>
+
+</body>
+
+</html>
