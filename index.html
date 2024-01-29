@@ -8,25 +8,35 @@
 </head>
 
 <body>
+    
+
     <!-- Priming sugar -->
     <div class="container">
         <h2 class="mt-5 text-center">Priming sugar calculator</h2>
         <h3 class="mt-5 text-center">Enter amount of beer in fermenter</h3> <br>        
 
-        
+        <!-- volume of beer -->
         <div class="row form-group justify-content-center">
             <div class="col-md-3">
                 <input type="number" id="inputForPrimingSugar" class="form-control"
                     placeholder="Enter amount in gallons">
             </div>
             <div class="col-md-3">
-                <button onclick="CalculatePrimingSugar()" class="btn btn-info w-100">Sugar2</button>
-                <a href="test.html">
-                    <button" class="btn btn-info w-100">Test</button>
-                </a>
-                
+                <button onclick="CalculatePrimingSugar()" class="btn btn-info w-100">Sugar</button>
             </div>
         </div>
+
+        <!-- Beer style -->
+        <form id="beerForm" class="text-center">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="beerType" id="regularCarbonation" value="1.0" checked>
+                <label class="form-check-label" for="regularCarbonation">Regular (2.7 vol)</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="beerType" id="lowCarbonation" value="0.75">
+                <label class="form-check-label" for="lowCarbonation">Low (2.2 vol)</label>
+            </div>
+        </form>
 
         <!-- Result -->
         <p id="primingSugar" class="mt-3 text-center"></p>
@@ -34,7 +44,6 @@
     </div>
 
     <!-- Dry Hop -->
-    <br>
     <div class="container">
         <h2 class="mt-5 text-center">Dry-hop calculator</h2>
         <h3 class="mt-5 text-center">Enter amount of beer in fermenter</h3> <br>        
@@ -64,12 +73,13 @@
     <script>
         function CalculatePrimingSugar() {
             var toGrams = 28;
+            var beerStyle = document.querySelector('input[name="beerType"]:checked').value;
             var batchSize = document.getElementById('inputForPrimingSugar').value;
             var toAgave = 1.40056;
 
             // calculate priming sugar
-            var totalSugar = Math.round(batchSize * toGrams * 10) / 10;
-            var totalAgave = Math.round(batchSize * toGrams * toAgave * 10) / 10;
+            var totalSugar = Math.round(beerStyle * batchSize * toGrams * 10) / 10;
+            var totalAgave = Math.round(beerStyle * batchSize * toGrams * toAgave * 10) / 10;
 
             document.getElementById('primingSugar').innerText = 'Priming Sugar: ' + totalSugar + "g";
             document.getElementById('primingAgave').innerText = 'Agave: ' + totalAgave + "g";
