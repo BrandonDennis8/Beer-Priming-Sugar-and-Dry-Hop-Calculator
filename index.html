@@ -15,30 +15,34 @@
         <h2 class="mt-5 text-center">Priming sugar calculator</h2>
         <h3 class="mt-5 text-center">Enter amount of beer in fermenter</h3> <br>        
 
-        <!-- volume of beer -->
-        <div class="row form-group justify-content-center">
-            <div class="col-md-3">
-                <input type="number" id="inputForPrimingSugar" class="form-control"
-                    placeholder="Enter amount in gallons">
+        <!-- Amount of beer -->
+        <div class="row form-group justify-content-center align-items-center">
+            <div class="col-md-2 text-center">
+                <label for="volumeOfBeer">Amount of Beer:</label>
             </div>
-            <div class="col-md-3">
-                <button onclick="CalculatePrimingSugar()" class="btn btn-info w-100">Sugar</button>
+            <div class="col-md-2">
+                <input type="decimal" id="volumeOfBeer" class="form-control" placeholder="Gallons">
             </div>
         </div>
 
-        <!-- Beer style -->
-        <form id="beerForm" class="text-center">
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="beerType" id="regularCarbonation" value="1.0" checked>
-                <label class="form-check-label" for="regularCarbonation">Regular (2.7 vol)</label>
+        <!-- Desired carbonation -->
+        <div class="row form-group justify-content-center align-items-center">
+            <div class="col-md-2 text-center">
+                <label for="desiredCarbonation">Carbonation:</label>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="beerType" id="lowCarbonation" value="0.75">
-                <label class="form-check-label" for="lowCarbonation">Low (2.2 vol)</label>
+            <div class="col-md-2">
+                <input type="decimal" id="desiredCarbonation" class="form-control" placeholder="Vols">
             </div>
-        </form>
+        </div>
 
-        <!-- Result --> <br>
+        <!-- Submit button -->
+        <div class="row form-group justify-content-center">
+            <div class="col-md-4 text-center">
+                <button onclick="CalculatePrimingSugar()" class="btn btn-info">Calculate Sugar</button>
+            </div>
+        </div>
+
+        <!-- Result -->
         <p id="primingSugar" class="mt-3 text-center"></p>
         <p id="primingAgave" class="mt-3 text-center"></p>
     </div>
@@ -72,14 +76,17 @@
 
     <script>
         function CalculatePrimingSugar() {
-            var toGrams = 28.3495;
-            var beerStyle = document.querySelector('input[name="beerType"]:checked').value;
-            var batchSize = document.getElementById('inputForPrimingSugar').value;
+            var ouncesToGrams = 28.3495;
+            var beerStyle = document.getElementById('desiredCarbonation').value;
+            var batchSize = document.getElementById('volumeOfBeer').value;
             var toAgave = 1.40056;
 
+            // formula for carbonation
+            beerStyle = 0.534 * beerStyle - 0.4599;
+
             // calculate priming sugar
-            var totalSugar = Math.round(beerStyle * batchSize * toGrams * 10) / 10;
-            var totalAgave = Math.round(beerStyle * batchSize * toGrams * toAgave * 10) / 10;
+            var totalSugar = Math.round(beerStyle * batchSize * ouncesToGrams * 10) / 10;
+            var totalAgave = Math.round(beerStyle * batchSize * ouncesToGrams * toAgave * 10) / 10;
 
             document.getElementById('primingSugar').innerText = 'Priming Sugar: ' + totalSugar + "g";
             document.getElementById('primingAgave').innerText = 'Agave: ' + totalAgave + "g";
@@ -104,6 +111,21 @@
             document.getElementById('Grams').innerText = 'Grams: ' + minG + "g - " + maxG +"g";
             document.getElementById('Ounces').innerText = 'Ounces: ' + minOz + "oz - " + maxOz +"oz";
         }
+
+        document.getElementById('volumeOfBeer').addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+                CalculatePrimingSugar();
+                event.preventDefault(); // Prevent the default form submit behavior
+            }
+        });
+
+        document.getElementById('desiredCarbonation').addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+                CalculatePrimingSugar();
+                event.preventDefault(); // Prevent the default form submit behavior
+            }
+        });
+
     </script>
 
 </body>
